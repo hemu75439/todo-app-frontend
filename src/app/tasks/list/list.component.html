@@ -1,0 +1,37 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<mat-accordion multi="false" *ngIf="!isLoading">
+  <mat-expansion-panel hideToggle *ngFor="let t of tasks">
+    <mat-expansion-panel-header color="accent">
+      <mat-panel-title color="accent">
+        {{t.title}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="task-img">
+      <img [src]="t.imagePath" [alt]="t.title">
+    </div>
+    <p color="accent">{{t.description}}</p>
+    <mat-action-row *ngIf="userIsAuthenticated && t.creator === userId">
+      <button mat-button color="primary" [routerLink]="['/edit', t._id]">Edit</button>
+      <button mat-button color="warning" (click)="onDelete(t._id)">Delete</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel hideToggle color="accent" *ngIf="tasks.length <= 0">
+    <mat-expansion-panel-header color="accent">
+      <mat-panel-title color="accent">
+        {{"No tasks available..."}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+</mat-accordion>
+
+
+<mat-paginator [length]="totalTasks"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOption"
+              (page)="onChangePage($event)">
+</mat-paginator>
+
+
+

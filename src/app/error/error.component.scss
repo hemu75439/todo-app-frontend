@@ -1,0 +1,18 @@
+
+.container {
+  text-align: center;
+}
+
+.container h2 {
+  color: red;
+}
+
+.btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-container button {
+  padding: 5px 35px;
+}

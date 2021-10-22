@@ -1,0 +1,28 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-card *ngIf="!isLoading">
+  <form [formGroup]="taskForm" (submit)="onSaveTask()">
+
+    <mat-label>Title</mat-label>
+    <input matInput placeholder="Title"  autocomplete="off" formControlName="title">
+    <mat-error *ngIf="taskForm.get('title').invalid && (taskForm.get('title').dirty || taskForm.get('title').touched)">Please enter Title</mat-error>
+
+    <br><br><br>
+    <div>
+      <button (click)="filePicker.click()" class="file-picker-btn" type="button">Select Image</button>
+      <input type="file" #filePicker (change)="onImagePick($event)">
+    </div>
+    <div class="img-preview" *ngIf="task != undefined || imagePreview && imagePreview != ''">
+      <img [src]="(!imagePreview)?task.imagePath:imagePreview" [alt]="taskForm.value.title">
+    </div>
+    <br><br><br>
+
+    <mat-label>Description</mat-label>
+    <textarea matInput placeholder="Description" formControlName="description"></textarea>
+    <mat-error *ngIf="taskForm.get('description').invalid && (taskForm.get('description').dirty || taskForm.get('description').touched)">Please enter Description</mat-error>
+
+    <br><br><br>
+    <button type="submit">{{mode}}</button>
+  </form>
+</mat-card>
+
+

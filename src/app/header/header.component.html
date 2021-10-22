@@ -1,0 +1,18 @@
+<mat-toolbar>
+  <span><a routerLink="">ToDo List App</a></span>
+  <button *ngIf="userIsAuthenticated" routerLink="/create" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    + Create
+  </button>
+
+  <button *ngIf="!userIsAuthenticated" routerLink="/login" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    Login
+  </button>
+
+  <button *ngIf="!userIsAuthenticated" routerLink="/signup" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    Sign Up
+  </button>
+
+  <button *ngIf="userIsAuthenticated" (click)="onLogout()">
+    Logout
+  </button>
+</mat-toolbar>

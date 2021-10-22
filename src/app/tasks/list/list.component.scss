@@ -1,0 +1,77 @@
+mat-expansion-panel {
+  border: 1px solid black;
+  padding: 20px 40px;
+}
+
+
+mat-expansion-panel-header {
+  border: 1px solid transparent;
+  border-bottom: 1px solid #fff;
+  border-radius: 0;
+  font-size: 1.15rem;
+  padding: 0;
+}
+
+p {
+  max-height: 400px;
+  padding-top: 15px;
+  overflow: scroll;
+}
+
+button {
+  padding: 5px 25px;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1.1rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:nth-child(2) {
+  color: red;
+}
+
+button:hover {
+  background: rgba(0, 0, 0, .2);
+}
+
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  width: 2px;
+  height: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+mat-spinner {
+  margin: 0 auto;
+}
+
+
+.task-img {
+  margin: 20px 0 0;
+  max-height: 600px;
+  max-width: 100%;
+}
+
+.task-img img {
+  height: 100%;
+  max-width: 100%;
+  max-height: 600px;
+}
