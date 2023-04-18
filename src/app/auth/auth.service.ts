@@ -21,11 +21,15 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   getToken() {
-    return this.token;
+    if(this.token) return this.token;
+    const authData = JSON.parse(localStorage.getItem('todo-app-auth-info'));
+    return authData?.token;
   }
 
   getUserId() {
-    return this.userId;
+    if(this.userId) return this.userId;
+    const authData = JSON.parse(localStorage.getItem('todo-app-auth-info'));
+    return authData?.userId;
   }
 
   getAuthStatusListener() {

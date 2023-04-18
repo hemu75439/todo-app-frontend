@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
 import { environment } from "src/environments/environment";
+import { AuthService } from "../auth/auth.service";
 interface Task {
   _id: string;
   title: string;
@@ -16,7 +17,7 @@ export class TaskService {
   private tasks: Task[] = [];
   private taskUpdated = new Subject<{ tasks: Task[]; totalCount: number }>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router,private authService: AuthService) {}
 
   getTask(taskPerPage?: number, currentPage?: number) {
     let url = TASKS_URL;
@@ -47,6 +48,7 @@ export class TaskService {
     taskData.append("title", task.title);
     taskData.append("description", task.description);
     taskData.append("image", image, task.title);
+    taskData.append("userId", this.authService.getUserId());
 
     this.http
       .post<{ status: {}; data: Task[] }>(TASKS_URL + "create", taskData)
@@ -64,16 +66,18 @@ export class TaskService {
   }
 
   updateTask(task: Task) {
-    let taskData = null;
+    let taskData: any = null;
 
     if (typeof task.imagePath == "string") {
       taskData = task;
+      taskData['userId'] = this.authService.getUserId();
     } else {
       taskData = new FormData();
       taskData.append("_id", task._id);
       taskData.append("title", task.title);
       taskData.append("description", task.description);
       taskData.append("image", task.imagePath, task.title);
+      taskData.append("userId", this.authService.getUserId());
     }
 
     this.http

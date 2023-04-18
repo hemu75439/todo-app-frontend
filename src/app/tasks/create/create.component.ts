@@ -41,7 +41,7 @@ export class CreateTaskComponent implements OnInit {
           'image': new FormControl(null, {validators: [Validators.required]})
         })
 
-        this.mode = "Edit";
+        this.mode = "Save";
         this.taskId = paramMap.get('taskId');
 
         this.isLoading = true;
@@ -81,7 +81,7 @@ export class CreateTaskComponent implements OnInit {
 
     } else {
 
-      if(this.mode == "Edit") {
+      if(this.mode == "Save") {
 
         const task = {
           _id : this.task._id,

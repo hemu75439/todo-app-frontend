@@ -21,7 +21,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         console.log("err inter - ", err);
         let errorMsg = "Unknown Error.!";
 
-        if(err.error.status.msg) errorMsg = err.error.status.msg;
+        if(err.error.status.message) errorMsg = err.error.status.message;
 
         this.dialog.open(ErrorComponent, {
           width: '300px',
