@@ -4,6 +4,8 @@ import { Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
 import { environment } from "src/environments/environment";
 import { AuthService } from "../auth/auth.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+
 interface Task {
   _id: string;
   title: string;
@@ -17,7 +19,12 @@ export class TaskService {
   private tasks: Task[] = [];
   private taskUpdated = new Subject<{ tasks: Task[]; totalCount: number }>();
 
-  constructor(private http: HttpClient, private router: Router,private authService: AuthService) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private authService: AuthService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   getTask(taskPerPage?: number, currentPage?: number) {
     let url = TASKS_URL;
@@ -53,12 +60,16 @@ export class TaskService {
     this.http
       .post<{ status: {}; data: Task[] }>(TASKS_URL + "create", taskData)
       .subscribe(() => {
+        this._snackBar.open('New Task Created!', 'X');
         this.router.navigate(["/"]);
-      });
+      }, err => this.router.navigate(["/"]));
   }
 
   deleteTask(id: string) {
-    return this.http.delete(TASKS_URL + "delete/" + id);
+    this.http.delete(TASKS_URL + "delete/" + id).subscribe(()=> {
+      this._snackBar.open('Task Deleted!', 'X');
+      this.getTask(10, 10);
+    });
   }
 
   getTaskInfo(id: string | null) {
@@ -70,7 +81,7 @@ export class TaskService {
 
     if (typeof task.imagePath == "string") {
       taskData = task;
-      taskData['userId'] = this.authService.getUserId();
+      taskData["userId"] = this.authService.getUserId();
     } else {
       taskData = new FormData();
       taskData.append("_id", task._id);
@@ -83,6 +94,7 @@ export class TaskService {
     this.http
       .patch(TASKS_URL + "update/" + task._id, taskData)
       .subscribe((res) => {
+        this._snackBar.open('Task Updated!', 'X');
         this.router.navigate(["/"]);
       });
   }

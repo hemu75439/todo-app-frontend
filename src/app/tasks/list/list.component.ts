@@ -63,9 +63,7 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(id: string) {
-    this.taskService.deleteTask(id).subscribe(res => {
-      this.taskService.getTask(this.pageSize, this.pageIndex);
-    });
+    this.taskService.deleteTask(id);
   }
 
 

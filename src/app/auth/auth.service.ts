@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { Subject } from "rxjs";
 import { AuthData } from "./auth-data.model";
 import { environment } from "src/environments/environment";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 const USER_URL = environment.api + "api/users/";
 
@@ -18,7 +19,7 @@ export class AuthService {
   private authStatusListener = new Subject<boolean>();
   private authStatus = false;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private _snackBar: MatSnackBar) {}
 
   getToken() {
     if(this.token) return this.token;
@@ -44,7 +45,7 @@ export class AuthService {
     this.http.post(USER_URL + "signup", authData).subscribe(
       (res) => {
         console.log(res);
-        this.router.navigate(["/"]);
+        this.login(authData);
       },
       (err) => {
         console.log(err);
@@ -96,6 +97,7 @@ export class AuthService {
 
             this.authStatusListener.next(true);
             this.authStatus = true;
+            this._snackBar.open('Login Successful!', 'X');
             this.router.navigate(["/"]);
           }
         },
@@ -113,6 +115,7 @@ export class AuthService {
     this.authStatusListener.next(false);
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
+    this._snackBar.open('User Logged Out!', 'X');
     this.router.navigate(["/"]);
   }
 
